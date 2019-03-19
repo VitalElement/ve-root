@@ -3,7 +3,12 @@
 #
 include $(DEFINE_RECIPE)
 
-SYSTEM_IMAGE_SIZE:=2G
+UBOOT_GIT_REF?=v2019.01
+
+LINUX_GIT_URL:=https://github.com/VitalElement/linux.git
+LINUX_GIT_REF:=ve-rpi-4.10.y
+
+SYSTEM_IMAGE_SIZE?=1G
 
 #
 # Include all required layers.

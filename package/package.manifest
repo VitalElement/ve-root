@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "Gcc.CC": "bin/aarch64-linux-gnu-gcc",
+    "Gcc.CXX": "bin/aarch64-linux-gnu-g++",
+    "Gcc.AR": "bin/aarch64-linux-gnu-ar",
+    "Gcc.LD": "bin/aarch64-linux-gnu-gcc",
+    "Gcc.SIZE": "bin/aarch64-linux-gnu-size",
+    "Gcc.GDB": "bin/aarch64-linux-gnu-gdb",
+    "Gcc.LibraryQueryCommand": "bin/aarch64-linux-gnu-gcc",
+    "Paths": [
+      "bin/"
+    ],
+    "Gcc.SystemIncludePaths": [
+      "aarch64-linux-gnu/include/c++/7.3.0",
+      "aarch64-linux-gnu/include/c++/7.3.0/aarch64-linux-gnu",
+      "aarch64-linux-gnu/include/c++/7.3.0/backward",
+      "lib/gcc/aarch64-linux-gnu/7.3.0/include",
+      "lib/gcc/aarch64-linux-gnu/7.3.0/include-fixed",
+      "aarch64-linux-gnu/include",
+      "aarch64-linux-gnu/usr/include",
+      "usr/include"
+    ],
+    "Gcc.SystemLibraryPaths": [
+      "lib/aarch64-linux-gnu"
+    ]
+  }
+}

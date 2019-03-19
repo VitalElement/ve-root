@@ -1,0 +1,116 @@
+jobs:
+- job: Linux
+  timeoutInMinutes: 180
+  pool: Linux
+  steps:
+  - script: |
+      ./docker.sh rm -rf recipes/gx-ilmd
+      git clone https://github.com/danwalmsley/ve-root-ilmd-recipe.git recipes/gx-ilmd
+      ./docker.sh cp recipes/gx-ilmd/gx-ilmd_defconfig .config
+    displayName: 'Switch to gx-ilmd recipe'
+
+  - script: | 
+      ./docker.sh make L_tarball.invalidate L_debian-provision.invalidate L_debian-packages.invalidate L_debian-full-upgrade.invalidate  L_debian-os-patch.invalidate L_debian-customise.invalidate L_rootfs-permissions.invalidate L_debian-configure.invalidate L_debian-minimise.invalidate L_rootfs.invalidate L_updateimage.invalidate
+      ./docker.sh make -j10 source-checkout || true
+      ./docker.sh make -j$(nproc) L_rootfs
+    displayName: 'Build Root FS and RO FileSystem'
+    
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Latest Firmware'
+    inputs:
+      buildType: specific
+      project: ILMD
+      pipeline: gx-design.ILMD.Firmware
+      specificBuildWithTriggering: true
+      artifactName: Host
+      downloadPath: recipes/rpi3/rootfs/home/ilmd
+
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download Latest Peripheral Board Firmware Update'
+    inputs:
+      buildType: specific
+      project: ILMD
+      pipeline: gx-design.ILMD.Firmware
+      specificBuildWithTriggering: true
+      artifactName: PeripheralBoard
+      downloadPath: recipes/rpi3/rootfs/home/ilmd
+      itemPattern: '**/*.firmware'
+
+  - script: |
+      ./docker.sh make L_rootfs-permissions.invalidate
+      ./docker.sh chown -R 1000:1000 ./out/gx-ilmd/rootfs/home/ilmd
+    displayName: 'chmod executable'
+
+  - script: |
+      ./docker.sh make -j$(nproc)
+    displayName: 'Build SD Card Image'
+
+  - script: |
+      ./docker.sh make gcc-aarch64-linux-gnu.linux-x64_defconfig
+      ./docker.sh make -j$(nproc)
+    displayName: 'Build Linux x64 Toolchain'
+
+  - script: |
+      ./docker.sh make gcc-aarch64-linux-gnu.win-x64_defconfig
+      ./docker.sh make -j$(nproc)
+    displayName: 'Build Windows x64 Toolchain'
+      
+  - script: |
+      ./docker.sh cp ./package/package.manifest out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/
+      ./docker.sh cp ./package/package.manifest out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/
+      
+      ./docker.sh rm -rf docker/vitalelement/avalonbuild
+      git clone https://github.com/vitalelement/ve-root-docker-avalonbuild.git docker/vitalelement/avalonbuild
+      
+      ./docker.sh rm .config
+      ./docker.sh cp -v recipes/avalon-packager/packager_defconfig .config
+    displayName: 'Switch to Packaging Recipes'
+      
+  - script: |
+      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.linux-x64 clean
+      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.linux-x64
+      
+      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.win-x64 clean
+      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.win-x64
+    displayName: 'Package Toolchains'
+      
+  - script: |
+      ./docker.sh rm -rf ./out/gx-ilmd/archives
+      ./docker.sh mkdir ./out/gx-ilmd/archives
+
+      ./docker.sh rm -rf ./out/gx-ilmd/image
+      ./docker.sh mkdir ./out/gx-ilmd/image
+
+      ./docker.sh cp ./out/gx-ilmd/rootfs.tar ./out/gx-ilmd/archives
+      
+      ./docker.sh tar zcvf ./out/gx-ilmd/image/sdcard.img.tar.gz -C ./out/gx-ilmd/ sdcard.img
+
+      ./docker.sh cp ./out/gx-ilmd/update/system.img.tar.gz ./out/gx-ilmd/update
+      ./docker.sh cp ./out/gx-ilmd/build/L_updateimage/updateimage.fit ./out/gx-ilmd/update
+
+      ./docker.sh cp ./out/gx-ilmd/build/L_rootfs-ext4-image/rootfs.ext4.img.gz ./out/gx-ilmd/archives
+      
+    displayName: 'Compress RootFs'
+      
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'out/packages'
+      artifactName: toolchains
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'out/gx-ilmd/archives'
+      artifactName: sysroot
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'out/gx-ilmd/update'
+      artifactName: update
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: 'out/gx-ilmd/image'
+      artifactName: image
+
+

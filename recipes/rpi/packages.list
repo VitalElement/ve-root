@@ -18,3 +18,5 @@ alsa-utils
 avahi-daemon
 usbutils
 alsa
+samba
+usbutils
