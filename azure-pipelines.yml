@@ -10,7 +10,7 @@ jobs:
     displayName: 'Switch to gx-ilmd recipe'
 
   - script: | 
-      ./docker.sh make L_tarball.invalidate L_debian-provision.invalidate L_debian-packages.invalidate L_debian-full-upgrade.invalidate  L_debian-os-patch.invalidate L_debian-customise.invalidate L_rootfs-permissions.invalidate L_debian-configure.invalidate L_debian-minimise.invalidate L_rootfs.invalidate L_updateimage.invalidate
+      ./docker.sh make L_debian-provision.invalidate
       ./docker.sh make -j10 source-checkout || true
       ./docker.sh make -j$(nproc) L_rootfs
     displayName: 'Build Root FS and RO FileSystem'
@@ -24,7 +24,7 @@ jobs:
       pipeline: gx-design.ILMD.Firmware
       specificBuildWithTriggering: true
       artifactName: Host
-      downloadPath: recipes/rpi3/rootfs/home/ilmd
+      downloadPath: recipes/gx-ilmd/rootfs/home/ilmd
 
   - task: DownloadBuildArtifacts@0
     displayName: 'Download Latest Peripheral Board Firmware Update'
@@ -34,12 +34,12 @@ jobs:
       pipeline: gx-design.ILMD.Firmware
       specificBuildWithTriggering: true
       artifactName: PeripheralBoard
-      downloadPath: recipes/rpi3/rootfs/home/ilmd
+      downloadPath: recipes/gx-ilmd/rootfs/home/ilmd
       itemPattern: '**/*.firmware'
 
   - script: |
       ./docker.sh make L_rootfs-permissions.invalidate
-      ./docker.sh chown -R 1000:1000 ./out/gx-ilmd/rootfs/home/ilmd
+      ./docker.sh chown -R 1000:1000 ./out/gx-ilmd/rpi3/rootfs/home/ilmd
     displayName: 'chmod executable'
 
   - script: |
@@ -76,20 +76,20 @@ jobs:
     displayName: 'Package Toolchains'
       
   - script: |
-      ./docker.sh rm -rf ./out/gx-ilmd/archives
-      ./docker.sh mkdir ./out/gx-ilmd/archives
+      ./docker.sh rm -rf ./out/gx-ilmd/rpi3/archives
+      ./docker.sh mkdir ./out/gx-ilmd/rpi3/archives
 
-      ./docker.sh rm -rf ./out/gx-ilmd/image
-      ./docker.sh mkdir ./out/gx-ilmd/image
+      ./docker.sh rm -rf ./out/gx-ilmd/rpi3/image
+      ./docker.sh mkdir ./out/gx-ilmd/rpi3/image
 
-      ./docker.sh cp ./out/gx-ilmd/rootfs.tar ./out/gx-ilmd/archives
+      ./docker.sh cp ./out/gx-ilmd/rpi3/rootfs.tar ./out/gx-ilmd/rpi3/archives
       
-      ./docker.sh tar zcvf ./out/gx-ilmd/image/sdcard.img.tar.gz -C ./out/gx-ilmd/ sdcard.img
+      ./docker.sh tar zcvf ./out/gx-ilmd/rpi3/image/sdcard.img.tar.gz -C ./out/gx-ilmd/rpi3/ sdcard.img
 
-      ./docker.sh cp ./out/gx-ilmd/update/system.img.tar.gz ./out/gx-ilmd/update
-      ./docker.sh cp ./out/gx-ilmd/build/L_updateimage/updateimage.fit ./out/gx-ilmd/update
+      ./docker.sh cp ./out/gx-ilmd/rpi3/update/system.img.tar.gz ./out/gx-ilmd/rpi3/update
+      ./docker.sh cp ./out/gx-ilmd/rpi3/build/L_updateimage/updateimage.fit ./out/gx-ilmd/rpi3/update
 
-      ./docker.sh cp ./out/gx-ilmd/build/L_rootfs-ext4-image/rootfs.ext4.img.gz ./out/gx-ilmd/archives
+      ./docker.sh cp ./out/gx-ilmd/rpi3/build/L_rootfs-ext4-image/rootfs.ext4.img.gz ./out/gx-ilmd/rpi3/archives
       
     displayName: 'Compress RootFs'
       
@@ -100,17 +100,17 @@ jobs:
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: 'out/gx-ilmd/archives'
+      pathtoPublish: 'out/gx-ilmd/rpi3/archives'
       artifactName: sysroot
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: 'out/gx-ilmd/update'
+      pathtoPublish: 'out/gx-ilmd/rpi3/update'
       artifactName: update
 
   - task: PublishBuildArtifacts@1
     inputs:
-      pathtoPublish: 'out/gx-ilmd/image'
+      pathtoPublish: 'out/gx-ilmd/rpi3/image'
       artifactName: image
 
 
