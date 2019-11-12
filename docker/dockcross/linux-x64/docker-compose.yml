@@ -10,7 +10,6 @@ services:
       - ../../docker-ve-root.sh:/docker-ve-root.sh
       - ./.bash_history:/root/.bash_history
       - /tmp:/tmp
-      - /proc:/proc
     environment:
       - CC=
       - CXX=
