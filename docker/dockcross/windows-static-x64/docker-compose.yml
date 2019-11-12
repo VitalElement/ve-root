@@ -8,7 +8,6 @@ services:
       - ${BASE}:/work
       - ./.bash_history:/root/.bash_history
       - /tmp:/tmp
-      - /proc:/proc
       - ./entrypoint.sh:/entrypoint.sh
       - ../../docker-ve-root.sh:/docker-ve-root.sh
     environment:
