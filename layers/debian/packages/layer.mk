@@ -21,7 +21,7 @@ $(debian-install-packages):
 	$(QEMU_START)
 	rsync -av $(basedir)/scripts/install-packages.sh $(ROOTFS)/install-packages.sh
 ifneq ($(wildcard $(ROOTFS)/packages.list),)
-	rm $(ROOTFS)/packages.list
+	-rm $(ROOTFS)/packages.list
 endif
 ifneq ($(wildcard $(RECIPE)/packages.list),)
 	cat $(RECIPE)/packages.list >> $(ROOTFS)/packages.list
