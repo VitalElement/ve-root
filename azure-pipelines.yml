@@ -3,9 +3,7 @@ jobs:
   timeoutInMinutes: 180
   pool: Linux
   steps:
-  - script: |
-      ./docker.sh rm -rf recipes/gx-ilmd
-      git clone https://github.com/danwalmsley/ve-root-ilmd-recipe.git recipes/gx-ilmd
+  - script: |            
       ./docker.sh cp recipes/gx-ilmd/gx-ilmd_defconfig .config
     displayName: 'Switch to gx-ilmd recipe'
 
