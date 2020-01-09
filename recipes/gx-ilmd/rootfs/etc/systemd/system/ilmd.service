@@ -1,0 +1,17 @@
+[Unit]
+Description=SSID
+After=sound.target
+
+[Service]
+User=ilmd
+ExecStartPre=/bin/sleep 3
+ExecStart=/home/ilmd/Host/ILMD.Linux.ARM
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=gx-ilmd
+Type=simple
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target

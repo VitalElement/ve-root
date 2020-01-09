@@ -1,0 +1,3 @@
+# Path:find type:command
+/home/ilmd::chown -R ilmd:ilmd
+/home/ilmd/Host::chmod -R +x

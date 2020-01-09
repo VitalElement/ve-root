@@ -1,0 +1,6 @@
+CONFIG_RECIPE:=gx-ilmd
+CONFIG_VARIANT:=rpi3
+
+CONFIG_RELEASE:=y
+
+
