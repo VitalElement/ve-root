@@ -3,7 +3,7 @@ MAINTAINER James Walmsley <james@vitalelement.co.uk>
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
-RUN apt-get -y install git vim debootstrap qemu-system-arm qemu-efi qemu-user qemu-user-static build-essential bc libncurses-dev multistrap dpkg-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu cmake python3 python3-jinja2 python sudo
+RUN apt-get -y install git vim debootstrap qemu-system-arm qemu-efi qemu-user qemu-user-static build-essential bc libncurses-dev multistrap dpkg-dev gcc-aarch64-linux-gnu g++-aarch64-linux-gnu cmake python3-aptdaemon python3 python3-jinja2 python sudo
 RUN apt-get -y install rsync cpio gzip u-boot-tools
 RUN apt-get -y install android-tools-fsutils
 RUN apt-get -y install bash-completion
