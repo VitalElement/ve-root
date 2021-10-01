@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 MAINTAINER James Walmsley <james@vitalelement.co.uk>
 
 ENV DEBIAN_FRONTEND=noninteractive
