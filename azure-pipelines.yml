@@ -10,7 +10,7 @@ jobs:
   - script: | 
       ./docker.sh make L_debian-provision.invalidate
       ./docker.sh make -j10 source-checkout || true
-      ./docker.sh make -j1 L_rootfs
+      ./docker.sh make -j$(nproc) L_rootfs
     displayName: 'Build Root FS and RO FileSystem'
     
 
