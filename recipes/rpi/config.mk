@@ -2,7 +2,7 @@ ARCH:=arm64
 CROSS_COMPILE:=aarch64-linux-gnu-
 
 RECIPE_DEB_ARCH:=$(ARCH)
-RECIPE_DEB_RELEASE:=focal
+RECIPE_DEB_RELEASE:=bionic
 BOOT_IMAGE_SIZE:=48M
 
 LINUX_GIT_URL:=https://github.com/VitalElement/linux.git

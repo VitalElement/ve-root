@@ -19,10 +19,10 @@
 
 	"aptitude": {
 		"sources": [
-			"deb http://ports.ubuntu.com/ubuntu-ports focal main restricted",
-			"deb http://ports.ubuntu.com/ubuntu-ports focal-updates main restricted",
-			"deb http://ports.ubuntu.com/ubuntu-ports focal universe",
-			"deb http://ports.ubuntu.com/ubuntu-ports focal-updates universe"
+			"deb http://ports.ubuntu.com/ubuntu-ports bionic main restricted",
+			"deb http://ports.ubuntu.com/ubuntu-ports bionic-updates main restricted",
+			"deb http://ports.ubuntu.com/ubuntu-ports bionic universe",
+			"deb http://ports.ubuntu.com/ubuntu-ports bionic-updates universe"
 		]
 	},
 

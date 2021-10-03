@@ -14,7 +14,7 @@ $(L) += $(rpi-firmware)
 #
 # Specify source checkouts
 #
-$(call git_clone, linux-firmware, https://kernel.googlesource.com/pub/scm/linux/kernel/git/firmware/linux-firmware.git, master)
+$(call git_clone, linux-firmware, https://kernel.googlesource.com/pub/scm/linux/kernel/git/firmware/linux-firmware.git, 20201218)
 
 #
 # Specify layer dependencies
