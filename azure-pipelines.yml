@@ -18,7 +18,7 @@ jobs:
     displayName: 'Download Latest Firmware'
     inputs:
       buildType: specific
-      project: ILMD
+      project: ILMD.Firmware
       pipeline: VitalElement.ILMD.Firmware
       specificBuildWithTriggering: true
       artifactName: Host
@@ -28,7 +28,7 @@ jobs:
     displayName: 'Download Latest Peripheral Board Firmware Update'
     inputs:
       buildType: specific
-      project: ILMD
+      project: ILMD.Firmware
       pipeline: VitalElement.ILMD.Firmware
       specificBuildWithTriggering: true
       artifactName: PeripheralBoard
