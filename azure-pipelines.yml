@@ -13,27 +13,27 @@ jobs:
       ./docker.sh make -j$(nproc) L_rootfs
     displayName: 'Build Root FS and RO FileSystem'
     
-
-  - task: DownloadBuildArtifacts@0
+  - task: DownloadPipelineArtifact@2
     displayName: 'Download Latest Firmware'
     inputs:
-      buildType: specific
-      project: ILMD.Firmware
-      pipeline: VitalElement.ILMD.Firmware
+      buildType: 'specific'
+      project: '490f42b9-087f-4600-8e27-dad0c543fbac'
+      definition: '10'
       specificBuildWithTriggering: true
       artifactName: Host
-      downloadPath: recipes/gx-ilmd/rootfs/home/ilmd
-
-  - task: DownloadBuildArtifacts@0
+      targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd'
+  
+  - task: DownloadPipelineArtifact@2
     displayName: 'Download Latest Peripheral Board Firmware Update'
     inputs:
-      buildType: specific
-      project: ILMD.Firmware
-      pipeline: VitalElement.ILMD.Firmware
+      buildType: 'specific'
+      project: '490f42b9-087f-4600-8e27-dad0c543fbac'
+      definition: '10'
       specificBuildWithTriggering: true
-      artifactName: PeripheralBoard
-      downloadPath: recipes/gx-ilmd/rootfs/home/ilmd
+      buildVersionToDownload: 'latest'
+      artifactName: 'PeripheralBoard'
       itemPattern: '**/*.firmware'
+      targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd'
 
   - script: |
       ./docker.sh make L_rootfs-permissions.invalidate
