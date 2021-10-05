@@ -15,6 +15,7 @@ services:
       - /tmp/ve-root/squid-cache:/var/cache/squid-deb-proxy
       - ./squid-deb-proxy.conf:/etc/squid-deb-proxy/squid-deb-proxy.conf
       - /tmp:/tmp
+      - /proc:/proc
       - ~/.ssh:/root/.ssh
     environment:
       - DISPLAY

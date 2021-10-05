@@ -10,6 +10,8 @@ LINUX_GIT_REF:=ve-rpi-4.10.y
 
 SYSTEM_IMAGE_SIZE?=1G
 
+LAYERS += qemu
+
 #
 # Include all required layers.
 #
