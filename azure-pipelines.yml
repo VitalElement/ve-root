@@ -36,6 +36,10 @@ jobs:
       targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd/Host/Firmware'
 
   - script: |
+      echo 1.0.0 > recipes/gx-ilmd/rootfs/home/ilmd/version
+    displayName: 'set version file'
+
+  - script: |
       ./docker.sh make L_rootfs-permissions.invalidate
       ./docker.sh chown -R 1000:1000 ./out/gx-ilmd/rpi3/rootfs/home/ilmd
     displayName: 'chmod executable'
