@@ -21,7 +21,7 @@ jobs:
       definition: '10'
       specificBuildWithTriggering: true
       artifactName: Host
-      targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd'
+      targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd/Host'
   
   - task: DownloadPipelineArtifact@2
     displayName: 'Download Latest Peripheral Board Firmware Update'
@@ -33,7 +33,7 @@ jobs:
       buildVersionToDownload: 'latest'
       artifactName: 'PeripheralBoard'
       itemPattern: '**/*.firmware'
-      targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd'
+      targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd/Host/Firmware'
 
   - script: |
       ./docker.sh make L_rootfs-permissions.invalidate
