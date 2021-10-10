@@ -10,7 +10,7 @@ RUN apt-get -y install rsync cpio gzip u-boot-tools
 RUN apt-get -y install  android-sdk-ext4-utils android-sdk-libsparse-utils
 RUN apt-get -y install bash-completion
 RUN apt-get -y install device-tree-compiler libssl-dev bison flex swig
-RUN apt-get -y install libpython-dev strace
+RUN apt-get -y install libpython3-dev strace
 RUN apt-get -y install vim tmux
 RUN apt-get -y install cryptsetup
 RUN apt-get -y install squid-deb-proxy
