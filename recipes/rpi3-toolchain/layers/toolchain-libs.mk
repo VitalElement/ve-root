@@ -88,7 +88,16 @@ $(libmpc):
 $(libmpc): $(libmpfr)
 
 $(libisl):
-	apt install -y libisl-dev
+	rm -rf $(builddir)/$(TC_HOST)/libisl
+	mkdir -p $(builddir)/$(TC_HOST)/libisl
+	cd $(builddir)/$(TC_HOST)/libisl && $(srcdir)/libisl/isl-$(VER_ISL)/configure \
+	--host=$(TC_HOST) \
+	--build=$(TC_BUILD) \
+	--prefix=$(hostlibs)/usr \
+	--disable-shared \
+	--with-gmp-prefix=$(hostlibs)/usr
+	cd $(builddir)/$(TC_HOST)/libisl && $(MAKE)
+	cd $(builddir)/$(TC_HOST)/libisl && $(MAKE) install
 	$(stamp)
 
 $(libisl): $(libgmp)
