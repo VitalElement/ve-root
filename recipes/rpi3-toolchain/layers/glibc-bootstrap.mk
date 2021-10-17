@@ -13,7 +13,7 @@ $(call git_clone, glibc, https://github.com/bminor/glibc.git, release/2.27/maste
 
 include $(BUILD_LAYER)
 
-GLIBC_CONFIG:=--with-headers=$(TC_SYSROOT)/include --disable-multilib libc_cv_forced_unwind=yes
+GLIBC_CONFIG:=--with-headers=$(TC_SYSROOT)/include --disable-multilib libc_cv_forced_unwind=yes --disable-werror
 
 ifeq ($(TC_NATIVE),y)
 TC_HOST:=$(TC_BUILD)
