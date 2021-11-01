@@ -1,3 +1,8 @@
+variables:  
+  version.maj: 0
+  version.min: 9
+  version.rev: 9
+
 jobs:
 - job: Linux
   timeoutInMinutes: 180
@@ -36,7 +41,7 @@ jobs:
       targetPath: 'recipes/gx-ilmd/rootfs/home/ilmd/Host/Firmware'
 
   - script: |
-      echo 1.0.0 > recipes/gx-ilmd/rootfs/home/ilmd/version
+      echo $(version.maj).$(version.min).$(Build.BuildId).$(version.rev) > recipes/gx-ilmd/rootfs/home/ilmd/version
     displayName: 'set version file'
 
   - script: |
