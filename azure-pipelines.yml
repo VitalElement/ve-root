@@ -1,7 +1,7 @@
 variables:  
-  version.maj: 0
-  version.min: 9
-  version.rev: 9
+  version.maj: 1
+  version.min: 0
+  version.rev: 0
 
 jobs:
 - job: Linux
