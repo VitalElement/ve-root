@@ -53,34 +53,34 @@ jobs:
       ./docker.sh make -j$(nproc)
     displayName: 'Build SD Card Image'
 
-  - script: |
-      ./docker.sh make gcc-aarch64-linux-gnu.linux-x64_defconfig
-      ./docker.sh make -j$(nproc)
-    displayName: 'Build Linux x64 Toolchain'
+ # - script: |
+ #     ./docker.sh make gcc-aarch64-linux-gnu.linux-x64_defconfig
+ #     ./docker.sh make -j$(nproc)
+ #   displayName: 'Build Linux x64 Toolchain'
 
-  - script: |
-      ./docker.sh make gcc-aarch64-linux-gnu.win-x64_defconfig
-      ./docker.sh make -j$(nproc)
-    displayName: 'Build Windows x64 Toolchain'
+  #- script: |
+  #    ./docker.sh make gcc-aarch64-linux-gnu.win-x64_defconfig
+  #    ./docker.sh make -j$(nproc)
+  #  displayName: 'Build Windows x64 Toolchain'
       
-  - script: |
-      ./docker.sh cp ./package/package.manifest out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/
-      ./docker.sh cp ./package/package.manifest out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/
+  #- script: |
+  #    ./docker.sh cp ./package/package.manifest out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/
+  #    ./docker.sh cp ./package/package.manifest out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/
       
-      ./docker.sh rm -rf docker/vitalelement/avalonbuild
-      git clone https://github.com/vitalelement/ve-root-docker-avalonbuild.git docker/vitalelement/avalonbuild
+  #    ./docker.sh rm -rf docker/vitalelement/avalonbuild
+  #    git clone https://github.com/vitalelement/ve-root-docker-avalonbuild.git docker/vitalelement/avalonbuild
       
-      ./docker.sh rm .config
-      ./docker.sh cp -v recipes/avalon-packager/packager_defconfig .config
-    displayName: 'Switch to Packaging Recipes'
+  #    ./docker.sh rm .config
+  #    ./docker.sh cp -v recipes/avalon-packager/packager_defconfig .config
+  #  displayName: 'Switch to Packaging Recipes'
       
-  - script: |
-      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.linux-x64 clean
-      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.linux-x64
+  #- script: |
+  #    ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.linux-x64 clean
+  #    ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-linux-gnu/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.linux-x64
       
-      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.win-x64 clean
-      ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.win-x64
-    displayName: 'Package Toolchains'
+  #    ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.win-x64 clean
+  #    ./docker.sh make PACKAGE_DIR=./out/rpi3-toolchain/toolchains/x86_64-w64-mingw32.static/aarch64-linux-gnu/ PACKAGE_NAME=gcc.aarch64-linux-gnu.win-x64
+  #  displayName: 'Package Toolchains'
       
   - script: |
       ./docker.sh rm -rf ./out/gx-ilmd/rpi3/archives
@@ -97,13 +97,12 @@ jobs:
       ./docker.sh cp ./out/gx-ilmd/rpi3/build/L_updateimage/updateimage.fit ./out/gx-ilmd/rpi3/update
 
       ./docker.sh cp ./out/gx-ilmd/rpi3/build/L_rootfs-ext4-image/rootfs.ext4.img.gz ./out/gx-ilmd/rpi3/archives
-    
     displayName: 'Compress RootFs'
       
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathtoPublish: 'out/packages'
-      artifactName: toolchains
+  #- task: PublishBuildArtifacts@1
+  #  inputs:
+  #    pathtoPublish: 'out/packages'
+  #    artifactName: toolchains
 
   - task: PublishBuildArtifacts@1
     inputs:
