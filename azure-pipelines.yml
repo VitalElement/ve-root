@@ -1,12 +1,12 @@
 variables:  
   version.maj: 1
-  version.min: 0
+  version.min: 1
   version.rev: 0
 
 jobs:
 - job: Linux
   timeoutInMinutes: 180
-  pool: Linux
+  pool: Ubuntu
   steps:
   - script: |            
       ./docker.sh cp recipes/gx-ilmd/gx-ilmd_defconfig .config
