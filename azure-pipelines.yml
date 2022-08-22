@@ -1,6 +1,6 @@
 variables:  
   version.maj: 1
-  version.min: 1
+  version.min: 2
   version.rev: 0
 
 jobs:
