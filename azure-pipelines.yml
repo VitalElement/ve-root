@@ -6,7 +6,7 @@ variables:
 jobs:
 - job: Linux
   timeoutInMinutes: 180
-  pool: Ubuntu
+  pool: Linux
   steps:
   - script: |            
       ./docker.sh cp recipes/gx-ilmd/gx-ilmd_defconfig .config
